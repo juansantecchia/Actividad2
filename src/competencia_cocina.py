@@ -52,3 +52,40 @@ def crear_estadisticas(participantes):
         }
 
     return estadisticas
+
+
+def buscar_ganadores_ronda(resultados_ronda):
+    """
+    Busca el o los ganadores de una ronda.
+    Retorna una lista con los ganadores y el puntaje máximo.
+    """
+    maximo = None
+    ganadores = []
+
+    for participante in resultados_ronda:
+        puntaje = resultados_ronda[participante]
+
+        if maximo is None or puntaje > maximo:
+            maximo = puntaje
+            ganadores = [participante]
+        elif puntaje == maximo:
+            ganadores.append(participante)
+
+    return ganadores, maximo
+
+
+def actualizar_estadisticas(estadisticas, resultados_ronda, ganadores):
+    """
+    Actualiza puntaje total, rondas jugadas, mejor ronda y rondas ganadas.
+    """
+    for participante in resultados_ronda:
+        puntaje = resultados_ronda[participante]
+
+        estadisticas[participante]["puntaje_total"] += puntaje
+        estadisticas[participante]["rondas_jugadas"] += 1
+
+        if puntaje > estadisticas[participante]["mejor_ronda"]:
+            estadisticas[participante]["mejor_ronda"] = puntaje
+
+    for ganador in ganadores:
+        estadisticas[ganador]["rondas_ganadas"] += 1
