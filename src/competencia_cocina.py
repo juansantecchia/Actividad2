@@ -23,3 +23,32 @@ def calcular_resultados_de_ronda(scores):
         resultados[participante] = puntaje
 
     return resultados
+
+
+def obtener_participantes(rounds):
+    """
+    Obtiene la lista de participantes a partir de la primera ronda.
+    """
+    participantes = []
+
+    for nombre in rounds[0]["scores"]:
+        participantes.append(nombre)
+
+    return participantes
+
+
+def crear_estadisticas(participantes):
+    """
+    Crea un diccionario con las estadísticas iniciales de cada participante.
+    """
+    estadisticas = {}
+
+    for nombre in participantes:
+        estadisticas[nombre] = {
+            "puntaje_total": 0,
+            "rondas_ganadas": 0,
+            "mejor_ronda": 0,
+            "rondas_jugadas": 0
+        }
+
+    return estadisticas
