@@ -146,4 +146,43 @@ def imprimir_tabla(tabla):
 
     print("-------------------------------------------------------------")
     print()
+
+
+def procesar_competencia(rounds):
+    """
+    Procesa toda la competencia, imprime la tabla por ronda
+    y retorna la tabla final.
+    """
+    participantes = obtener_participantes(rounds)
+    estadisticas = crear_estadisticas(participantes)
+
+    numero_ronda = 1
+
+    for ronda in rounds:
+        tema = ronda["theme"]
+        scores = ronda["scores"]
+
+        resultados_ronda = calcular_resultados_de_ronda(scores)
+        ganadores, puntaje_maximo = buscar_ganadores_ronda(resultados_ronda)
+
+        actualizar_estadisticas(estadisticas, resultados_ronda, ganadores)
+
+        tabla = construir_tabla(estadisticas)
+        ordenar_tabla_por_puntaje(tabla)
+
+        print(f"Ronda {numero_ronda} - {tema}:")
+
+        if len(ganadores) == 1:
+            print(f"Ganador: {ganadores[0]} ({puntaje_maximo} pts)")
+        else:
+            print(f"Ganadores: {', '.join(ganadores)} ({puntaje_maximo} pts)")
+
+        imprimir_tabla(tabla)
+
+        numero_ronda += 1
+
+    tabla_final = construir_tabla(estadisticas)
+    ordenar_tabla_por_puntaje(tabla_final)
+
+    return tabla_final
     
